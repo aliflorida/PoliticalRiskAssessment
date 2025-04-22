@@ -4,7 +4,7 @@ def select_models(investment_type, industry, time_horizon):
         models.add("ICRG")
     if investment_type.lower() in ["joint venture", "infrastructure"]:
         models.add("PRINCE")
-    if time_horizon == "Long-term":
+    if "long" in time_horizon.lower():
         models.add("WGI")
     if len(models) < 2:
         models.update(["PRINCE", "ICRG"])
