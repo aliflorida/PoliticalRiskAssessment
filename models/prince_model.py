@@ -2,8 +2,8 @@ def run_prince_model(country, industry, horizon):
     return {
         "model": "PRINCE",
         "score": 65,
-        "macro": ["Regulatory burden", "Policy inconsistency"],
-        "micro": ["Bureaucratic delays", "Civil unrest"],
-        "sovereign": ["Weak judicial enforcement"],
-        "recommendations": "Secure political risk insurance, ensure arbitration clauses, monitor legislative updates."
+        "macro": ["Policy inconsistency", "Political interference"],
+        "micro": ["Bureaucratic delays", "Elite capture"],
+        "sovereign": ["Judicial inefficiency"],
+        "recommendations": "Engage local advisors, monitor legal reform cycles, negotiate arbitration fallback."
     }
