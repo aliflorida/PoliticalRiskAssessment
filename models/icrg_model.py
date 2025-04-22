@@ -5,5 +5,5 @@ def run_icrg_model(country, industry, horizon):
         "macro": ["FX risk", "High inflation"],
         "micro": ["Low investment confidence"],
         "sovereign": ["Debt servicing pressure"],
-        "recommendations": "- Hedge currency exposure\n- Partner with local entities\n- Delay large capital projects"
+        "recommendations": "Hedge currency exposure, partner with local entities, delay large capital projects."
     }

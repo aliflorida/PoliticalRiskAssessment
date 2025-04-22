@@ -5,5 +5,5 @@ def run_prince_model(country, industry, horizon):
         "macro": ["Regulatory burden", "Policy inconsistency"],
         "micro": ["Bureaucratic delays", "Civil unrest"],
         "sovereign": ["Weak judicial enforcement"],
-        "recommendations": "- Secure political risk insurance\n- Ensure arbitration clauses\n- Monitor legislative updates"
+        "recommendations": "Secure political risk insurance, ensure arbitration clauses, monitor legislative updates."
     }
