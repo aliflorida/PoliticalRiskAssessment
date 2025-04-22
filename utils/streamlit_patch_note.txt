@@ -1,0 +1,1 @@
+Change all uses of `generate_full_narrative` to `generate_full_report` in `streamlit_app.py`.

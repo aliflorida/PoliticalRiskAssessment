@@ -4,7 +4,7 @@ def export_to_pdf(filename, narrative, model_text, benchmark_text):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, "Political Risk Assessment Report")
+    pdf.multi_cell(0, 10, "Political Risk Assessment Report", align='L')
     pdf.ln()
     pdf.multi_cell(0, 10, narrative)
     pdf.ln()
