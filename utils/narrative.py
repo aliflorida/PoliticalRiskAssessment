@@ -1,45 +1,49 @@
-def generate_full_narrative(country, company_name, investment_type, industry, broad_risk, future_concerns, recommendation_type):
+def generate_full_report(target_country, company_name, investment_type, industry, broad_risk, future_concerns, recommendation_type):
     return f"""
-## Political Risk Definition and Why It Matters
-Political risk is the probability that political decisions, events, or instability will negatively affect business operations or investment returns. For companies expanding into international markets, political risk assessment is vital to avoid losses, adapt strategies, and safeguard assets.
+# Executive Summary
+This report evaluates political risks associated with {company_name}'s {investment_type.lower()} in the {industry} sector in {target_country}. Using PRINCE, ICRG, and WGI models, we examine macroeconomic, sovereign, and institutional risks over short, mid, and long-term horizons.
 
-## Company and Investment Overview
-{company_name} is evaluating a {investment_type.lower()} opportunity in the {industry} sector within {country}. The company seeks to understand potential political challenges and determine whether to proceed, when to invest, or how to mitigate exposure.
+# Problem Definition
+{company_name} seeks to expand operations internationally, targeting {target_country} as a potential growth market. The core problem is determining whether political risk factors might hinder the venture’s viability or increase exposure to loss.
 
-## Historical and Political Context
-Historically, {country} has experienced shifts in political power, regulatory changes, and economic volatility, all of which contribute to foreign investor uncertainty. This background provides important context for assessing future scenarios and institutional risks.
+# Company Background
+{company_name} is exploring international opportunities as part of its strategic growth plan. The current expansion focuses on {industry}, requiring stable legal frameworks, government transparency, and market accessibility.
 
-## Problem Statement
-The key issue is to evaluate whether entering {country}'s market would pose unacceptable political or regulatory risks, or if strategies can be employed to manage those risks effectively.
+# Target Country Context
+{target_country} has a complex political history marked by regulatory instability, leadership transitions, and regional volatility. These factors shape the risk landscape for foreign investors and influence model forecasts.
 
-## Baseline: Investor Losses and Exposure
-Global data shows foreign investor losses are frequently tied to expropriation, regulatory overhaul, capital controls, and political violence. Identifying and forecasting such risks is key to avoiding similar outcomes.
+# Political Risk Definition and Relevance
+Political risk refers to the probability that political decisions, actions, or instability will negatively affect investment value or business continuity. For {industry} projects, risks may involve expropriation, policy shifts, social unrest, or legal unpredictability.
 
-## Forecasting Objective
-The goal is to forecast, prevent, or mitigate future political losses for {company_name} and provide actionable insight to support a go/no-go decision or guide mitigation efforts.
+# Foreign Investor Loss Baseline
+Historical trends in emerging markets show a correlation between high sovereign debt, weak regulatory enforcement, and investor losses due to unexpected reforms, revoked licenses, or blocked remittances.
 
-## Methodology and Models
-We used multiple models including:
-- **PRINCE**: Assesses political, regulatory, institutional, and external factors
-- **ICRG**: Scores macroeconomic, sovereign, and structural risk
-- **WGI**: Analyzes governance strength and rule-of-law indicators
+# Forecasting Objectives
+This report aims to forecast key risk factors, simulate political volatility, and identify mitigation strategies. The focus is on prevention and informed decision-making for the leadership team.
 
-## Variable Selection and Measurement
-Variables were chosen based on relevance to investment security and political forecasting. Each was assigned a weighted score based on risk exposure, with qualitative validation and scenario-based stress testing.
+# Methodology
+We applied the PRINCE (Political, Regulatory, Institutional, Nationalism, Corruption, External), ICRG (Macroeconomic/Sovereign), and WGI (Governance Quality) models.
+- **Variable Selection**: Includes inflation, FX stability, institutional strength, judicial independence, corruption indices.
+- **Scoring**: Weighted by relevance to investment type and country indicators.
+- **Rationale**: These models reflect both qualitative and quantitative data and are standard across risk assessment practices.
 
-## Future Forecast
-Our models evaluated near-, mid-, and long-term time horizons and flagged the following major risks:
-- {broad_risk}
-- {future_concerns}
+# Model Output Summary
+Each model outputs a score (0–100) and qualitative risk factors. Variables are grouped into macro, micro, and sovereign domains.
 
-## Recommendation Type: {recommendation_type}
-Based on the overall model scores and contextual analysis, we provide the following recommendation...
+# Forecast Highlights
+Key concerns based on user input and modeling:
+- General risk concerns: {broad_risk}
+- Future outlook: {future_concerns}
 
-## Mitigation Strategy Overview
-Key mitigation actions may include:
-- Partnering with local entities
-- Legal protections and arbitration clauses
-- Political risk insurance
-- Delaying entry until after elections or policy reform
+# Recommendations ({recommendation_type})
+Based on scenario modeling, the recommendation type is tailored to the requested outcome. Details appear in the model-specific output.
 
-""".strip()
+# Mitigation Strategies
+- Develop risk-sharing partnerships
+- Secure political risk insurance
+- Delay entry until after regulatory reforms
+- Monitor sovereign credit and election cycles
+
+# Final Guidance
+Proceed with caution, contingent on upcoming stability indicators. Risk mitigation plans should be in place pre-entry.
+"""
