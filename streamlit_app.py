@@ -4,7 +4,7 @@ from models.icrg_model import run_icrg_model
 from models.wgi_model import run_wgi_model
 from utils.model_selector import select_models
 from utils.narrative import generate_full_narrative
-from utils.export_utils import export_to_docx
+from utils.docx_exporter import export_to_docx
 from utils.benchmark_utils import compare_benchmark
 import os
 
