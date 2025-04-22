@@ -1,12 +1,12 @@
-def compare_benchmark(base_country_results, benchmark_results):
-    comparison = []
-    for base, bench in zip(base_country_results, benchmark_results):
+def compare_benchmark(base_outputs, benchmark_outputs):
+    results = []
+    for base, bench in zip(base_outputs, benchmark_outputs):
         diff = base['score'] - bench['score']
-        comparison.append({
+        results.append({
             "model": base['model'],
             "base_score": base['score'],
             "benchmark_score": bench['score'],
             "difference": diff,
             "risk_higher": base['model'] if diff > 0 else "Benchmark"
         })
-    return comparison
+    return results
