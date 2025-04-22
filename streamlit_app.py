@@ -1,12 +1,11 @@
 import streamlit as st
+import os
 from models.prince_model import run_prince_model
 from models.icrg_model import run_icrg_model
 from models.wgi_model import run_wgi_model
 from utils.model_selector import select_models
 from utils.narrative import generate_full_narrative
-from utils.docx_exporter import export_to_docx
-from utils.benchmark_utils import compare_benchmark
-import os
+from utils.docxtpl_exporter import export_to_docx
 
 st.set_page_config(page_title="Political Risk Assessment", layout="wide")
 st.title("📊 Political Risk Assessment Tool")
@@ -25,7 +24,6 @@ with st.sidebar:
     recommendation_type = st.selectbox("Type of Recommendation", [
         "Go / No Go Decision", "Investment Timing Advice", "Mitigation Strategy Suggestions"
     ])
-    benchmark_country = st.text_input("Benchmark Against Another Country (optional)")
     export_format = st.selectbox("Export Report As", ["DOCX"])
     audiences = st.multiselect("Audience", ["Client", "Analyst Team", "Political Risk Group"])
 
@@ -35,41 +33,36 @@ if st.button("Generate Assessment"):
     st.markdown(narrative)
 
     models = select_models(investment_type, industry, long_term)
-    base_outputs, benchmark_outputs = [], []
+    outputs = []
 
     for model in models:
         if model == "PRINCE":
-            base_outputs.append(run_prince_model(target_country, industry, long_term))
+            outputs.append(run_prince_model(target_country, industry, long_term))
         elif model == "ICRG":
-            base_outputs.append(run_icrg_model(target_country, industry, long_term))
+            outputs.append(run_icrg_model(target_country, industry, long_term))
         elif model == "WGI":
-            base_outputs.append(run_wgi_model(target_country, industry, long_term))
+            outputs.append(run_wgi_model(target_country, industry, long_term))
 
-    if benchmark_country:
-        st.subheader("Benchmark Comparison")
-        for model in models:
-            if model == "PRINCE":
-                benchmark_outputs.append(run_prince_model(benchmark_country, industry, long_term))
-            elif model == "ICRG":
-                benchmark_outputs.append(run_icrg_model(benchmark_country, industry, long_term))
-            elif model == "WGI":
-                benchmark_outputs.append(run_wgi_model(benchmark_country, industry, long_term))
+    model_text = ""
+    for result in outputs:
+        model_text += f"\n\n{result['model']} Model:\nScore: {result['score']}\n"
+        model_text += f"Macro: {', '.join(result['macro'])}\n"
+        model_text += f"Micro: {', '.join(result['micro'])}\n"
+        model_text += f"Sovereign: {', '.join(result['sovereign'])}\n"
+        model_text += f"Recommendations: {result['recommendations']}\n"
 
-        comparison = compare_benchmark(base_outputs, benchmark_outputs)
-        for item in comparison:
-            st.write(f"{item['model']}: Base Score = {item['base_score']} vs Benchmark Score = {item['benchmark_score']} → {item['risk_higher']} higher risk")
-
-    for result in base_outputs:
-        st.subheader(f"{result['model']} Model")
-        st.write(f"**Score**: {result['score']} / 100")
-        st.write("**Macro Risk**:", result["macro"])
-        st.write("**Micro Risk**:", result["micro"])
-        st.write("**Sovereign Risk**:", result["sovereign"])
-        st.write("**Recommendations:**")
-        st.markdown(result["recommendations"])
+    st.subheader("Model Results")
+    st.text(model_text)
 
     if export_format == "DOCX":
+        context = {
+            "title": "Political Risk Assessment Report",
+            "narrative": narrative,
+            "model_section": model_text
+        }
         export_path = os.path.join("exports", "political_risk_report.docx")
-        export_to_docx(export_path, narrative, base_outputs)
+        template_path = os.path.join("templates", "report_template.docx")
+        os.makedirs("exports", exist_ok=True)
+        export_to_docx(export_path, template_path, context)
         with open(export_path, "rb") as file:
             st.download_button("📥 Download DOCX Report", file, file_name="Political_Risk_Assessment.docx")
