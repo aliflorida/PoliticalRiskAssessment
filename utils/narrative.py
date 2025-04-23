@@ -1,43 +1,36 @@
-
 def generate_full_report(target_country, company_name, investment_type, industry, broad_risk, future_concerns, recommendation_type, models):
-    report = f"""
-# Executive Summary
-This report evaluates political risks associated with {company_name}'s {investment_type.lower()} in the {industry} sector in {target_country}. Using PRINCE, ICRG, and WGI models, we examine macroeconomic, sovereign, and institutional risks over short, mid, and long-term horizons.
+    sections = []
 
-# Company Background
-{company_name} is exploring international opportunities as part of its strategic growth plan. This expansion targets {target_country}, with operations in the {industry} sector.
+    sections.append(f"## Executive Summary\nThis report provides a comprehensive political risk analysis for {company_name}'s proposed {investment_type.lower()} in the {industry} sector in {target_country}.")
+    sections.append("## Political Risk Overview\nPolitical risk refers to the likelihood that political decisions, events, or conditions will adversely affect the business environment and investment returns.")
 
-# Country Context
-{target_country} has experienced political volatility, economic instability, and institutional inconsistencies. These dynamics impact risk models significantly.
+    sections.append(f"## Contextual Risk Factors\nBased on known conditions and historical precedent in {target_country}, significant concerns include: {broad_risk}.\nForecasted issues such as {future_concerns} are also likely to disrupt short and mid-term operations.")
 
-# Political Risk and its Importance
-Political risk refers to the likelihood of disruptions to operations due to political or institutional factors such as policy shifts, regulatory changes, or civil unrest.
-
-# Forecast Objective
-Our goal is to understand risk implications, forecast key disruptions, and guide investment decisions.
-
-# Broad Risk Concerns
-{broad_risk}
-
-# Specific Forecast Concerns
-{future_concerns}
-
-# Recommendation Type
-{recommendation_type}
-
-# Detailed Model Outputs
-""".strip()
-
+    sections.append("## Model Analysis and Scoring")
+    decision_score = 0
     for model in models:
-        report += f"""
+        sections.append(f"### {model['model']} Model")
+        sections.append(f"**Score**: {model['score']} / 100")
+        decision_score += model['score']
+        sections.append("**Risk Breakdown:**")
+        sections.append(f"- Macro: {', '.join(model['macro'])}")
+        sections.append(f"- Micro: {', '.join(model['micro'])}")
+        sections.append(f"- Sovereign: {', '.join(model['sovereign'])}")
+        sections.append("**Recommendations:**")
+        sections.append(model['recommendations'])
 
-## {model['model']} Model
-**Score**: {model['score']}  
-**Macro Risk**: {', '.join(model['macro'])}  
-**Micro Risk**: {', '.join(model['micro'])}  
-**Sovereign Risk**: {', '.join(model['sovereign'])}  
-**Recommendations**: {model['recommendations']}
+    avg_score = decision_score / len(models)
+    if avg_score > 70:
+        decision = "GO"
+        advisory = "Conditions are acceptable for expansion, though ongoing monitoring is required."
+    elif avg_score > 50:
+        decision = "DELAY"
+        advisory = "Current risk levels are moderate. Recommend delaying investment until after key reforms or elections."
+    else:
+        decision = "NO-GO"
+        advisory = "Political and economic instability present significant barriers to sustainable operations."
 
-""".strip()
+    sections.append("## Final Recommendation")
+    sections.append(f"**Decision**: {decision}\n**Rationale**: {advisory}")
 
-    return report
+    return "\n\n".join(sections)
