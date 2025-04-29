@@ -1,10 +1,9 @@
 import streamlit as st
-import os
 import pandas as pd
+import os
 import unicodedata
 from utils.narrative import generate_full_report
 
-# Placeholder model simulation
 def run_prince_model():
     return {
         "model": "PRINCE",
@@ -15,18 +14,16 @@ def run_prince_model():
         "recommendations": "Engage local advisors, negotiate arbitration fallback, monitor reform cycles."
     }
 
-# PDF Export Function with Unicode Fix
-def export_to_pdf(path, narrative_text):
+def export_to_pdf(path, report):
     from fpdf import FPDF
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    for line in narrative_text.split("\n"):
-        clean_line = unicodedata.normalize('NFKD', line).encode('latin-1', 'ignore').decode('latin-1')
-        pdf.multi_cell(0, 10, clean_line)
+    for line in report.split("\n"):
+        clean = unicodedata.normalize('NFKD', line).encode('latin-1', 'ignore').decode('latin-1')
+        pdf.multi_cell(0, 10, clean)
     pdf.output(path)
 
-# App Layout
 st.set_page_config(page_title="Political Risk Assessment Tool", layout="wide")
 st.title("📊 Political Risk Assessment Tool")
 
@@ -42,7 +39,7 @@ with st.sidebar:
 
 if st.button("Generate Report"):
     model_outputs = [run_prince_model()]
-    full_report = generate_full_report(
+    report = generate_full_report(
         target_country,
         company_name,
         investment_type,
@@ -54,9 +51,8 @@ if st.button("Generate Report"):
     )
 
     st.header("📘 Political Risk Report")
-    st.markdown(full_report)
+    st.markdown(report)
 
-    st.subheader("📊 Model Table: PRINCE")
     df = pd.DataFrame({
         "Category": ["Macro", "Micro", "Sovereign"],
         "Variables": [
@@ -68,9 +64,8 @@ if st.button("Generate Report"):
     })
     st.table(df)
 
-    # PDF Export
     pdf_path = os.path.join("exports", "political_risk_report.pdf")
     os.makedirs("exports", exist_ok=True)
-    export_to_pdf(pdf_path, full_report)
+    export_to_pdf(pdf_path, report)
     with open(pdf_path, "rb") as f:
         st.download_button("📥 Download Full Report (PDF)", f, file_name="Political_Risk_Report.pdf")
